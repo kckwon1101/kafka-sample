@@ -1,0 +1,17 @@
+spring:
+  application:
+    name:
+      kafka-sample
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: consumer_group01
+      auto-offset-reset: latest
+
+topic:
+  pub:
+    name:
+      req.test
+  sub:
+    name:
+      res.test

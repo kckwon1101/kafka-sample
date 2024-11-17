@@ -1,0 +1,7 @@
+POST http://localhost:8080/kafka/producer
+Content-Type: application/json
+
+{
+  "feauter": "test",
+  "s3Path": "s3://bucket-name"
+}

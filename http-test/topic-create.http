@@ -1,0 +1,8 @@
+POST http://localhost:8080/kafka/topic/create
+Content-Type: application/json
+
+{
+  "name": "req.test2",
+  "partitions": 3,
+  "replicationFactor": 1
+}

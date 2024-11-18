@@ -4,7 +4,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -15,10 +14,10 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    private final Environment env;
+    private final CustomKafkaProperties kafkaProperties;
 
-    KafkaProducerConfig(Environment environment) {
-        this.env = environment;
+    KafkaProducerConfig(CustomKafkaProperties kafkaProperties) {
+        this.kafkaProperties = kafkaProperties;
     }
 
     @Bean
@@ -29,7 +28,8 @@ public class KafkaProducerConfig {
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("spring.kafka.bootstrap-servers"));
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        props.putAll(kafkaProperties.getProperties());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         // See https://kafka.apache.org/documentation/#producerconfigs for more properties

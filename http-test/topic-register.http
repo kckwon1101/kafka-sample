@@ -1,0 +1,6 @@
+POST http://localhost:8080/kafka/topic-runtime/consumers/runtime/register
+Content-Type: application/json
+
+{
+  "topics": ["req.test3", "req.test4"]
+}

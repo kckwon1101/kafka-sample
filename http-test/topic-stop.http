@@ -1,0 +1,2 @@
+POST http://localhost:8080/kafka/topic-runtime/consumers/runtime/stop
+Content-Type: application/json

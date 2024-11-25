@@ -1,17 +1,24 @@
 spring:
-  application:
-    name:
-      kafka-sample
   kafka:
     bootstrap-servers: localhost:9094
+    listener:
+      ack-mode: RECORD
+      concurrency: 1
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      compression-type: lz4
+      acks: -1
+      properties:
+        schema.registry.url: http://localhost:8081
+        enable.idempotence: true
     consumer:
-      group-id: consumer_group01
-      auto-offset-reset: latest
-
-topic:
-  pub:
-    name:
-      req.test
-  sub:
-    name:
-      res.test
+      group-id: kafka
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+      max-poll-records: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://localhost:8081
+        isolation.level: read_committed
